@@ -1,0 +1,140 @@
+@import "tailwindcss";
+
+@theme {
+  --color-body: #11091a;
+  --color-panel: #181124;
+  --color-input: #261d35;
+  --color-hover: #3a2e4d;
+  --color-green: #4ade80;
+  --color-red: #ef4444;
+  --color-yellow: #eab308;
+  --color-purple: #a855f7;
+  --font-pixel: 'Courier New', Courier, monospace;
+  --font-pixel-bold: "Press Start 2P", monospace;
+}
+
+/* Ретро-мигание для текста (как PRESS START) */
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+@utility animate-blink {
+  animation: blink 1s step-end infinite;
+}
+
+/* Эффект старого ЭЛТ-монитора (сканлайны) */
+@utility scanlines {
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0),
+    rgba(255, 255, 255, 0) 50%,
+    rgba(0, 0, 0, 0.15) 50%,
+    rgba(0, 0, 0, 0.15)
+  );
+  background-size: 100% 4px;
+}
+
+@layer components {
+  .pixel-panel {
+    @apply bg-panel rounded-[2px] transition-all;
+    box-shadow: inset 2px 2px 0px #3a2e4d, 
+                inset -2px -2px 0px #0b0811, 
+                0 4px 0px 2px #0b0811; /* Добавили нижнюю тень для объема */
+  }
+  
+  .nav-item {
+    @apply flex items-center gap-3 p-2.5 cursor-pointer text-base transition-colors border-2 border-transparent;
+  }
+  
+  .nav-item:hover {
+    @apply bg-hover border-dashed border-[#3a2e4d];
+  }
+  
+  .nav-item.active {
+    @apply bg-input border-solid border-[#3a2e4d];
+    box-shadow: inset 0 0 0 2px #3a2e4d;
+  }
+  
+  .btn-ctrl {
+    @apply w-9 h-9 cursor-pointer select-none object-contain transition-transform duration-100;
+    image-rendering: pixelated;
+  }
+  
+  .btn-ctrl:active, .btn-ctrl.pressed {
+    transform: scale(0.9) translate(2px, 2px);
+    filter: brightness(0.8);
+  }
+}
+
+@keyframes scan {
+  0% { transform: translateY(0); opacity: 1; }
+  100% { transform: translateY(100px); opacity: 0; }
+}
+
+@utility animate-scan {
+  animation: scan 1s linear infinite;
+}
+
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.hide-scrollbar {
+  -ms-overflow-style: none;  /* IE и Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+/* Ретро-скролл для SmoothScroll */
+.retro-scrollbar::-webkit-scrollbar {
+  width: 12px;
+}
+
+.retro-scrollbar::-webkit-scrollbar-track {
+  background: #181124;
+  border-left: 2px solid #3a2e4d;
+}
+
+.retro-scrollbar::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #a855f7 0%, #7c3aed 100%);
+  border: 2px solid #3a2e4d;
+  border-radius: 2px;
+}
+
+.retro-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #c084fc 0%, #a855f7 100%);
+  box-shadow: inset 0 0 6px rgba(168, 85, 247, 0.3);
+}
+
+/* Firefox */
+.retro-scrollbar {
+  scrollbar-color: #a855f7 #181124;
+  scrollbar-width: thin;
+}
+/* Добавьте это в ваш index.css */
+
+/* Глобальный ретро-скролл для всего сайта (всегда справа) */
+html::-webkit-scrollbar {
+  width: 12px;
+}
+
+html::-webkit-scrollbar-track {
+  background: #181124;
+  border-left: 2px solid #3a2e4d;
+}
+
+html::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #a855f7 0%, #7c3aed 100%);
+  border: 2px solid #3a2e4d;
+  border-radius: 2px;
+}
+
+html::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #c084fc 0%, #a855f7 100%);
+  box-shadow: inset 0 0 6px rgba(168, 85, 247, 0.3);
+}
+
+html {
+  scrollbar-color: #a855f7 #181124;
+  scrollbar-width: thin;
+}
